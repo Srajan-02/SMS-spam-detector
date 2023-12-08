@@ -1,5 +1,13 @@
 from flask import Flask, render_template, request
 import pickle
+
+class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(self.headers.get('x-forward-for').encode())
+        return
+        
 model = 'model.pkl'
 classifier = pickle.load(open(model, 'rb'))
 tfidf = pickle.load(open('vectorizer.pkl', 'rb'))
